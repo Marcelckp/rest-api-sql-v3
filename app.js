@@ -13,11 +13,11 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
 // create the Express app
 const app = express();
 
-//add routes for the api
 
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
 
+//add routes for the api
 app.use('/api', routes)
 
 //IIFE

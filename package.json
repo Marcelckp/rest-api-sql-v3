@@ -14,6 +14,8 @@
     "nodemon": "^1.18.3"
   },
   "dependencies": {
+    "basic-auth": "^2.0.1",
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
