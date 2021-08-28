@@ -21,16 +21,17 @@ app.use(morgan('dev'));
 app.use('/api', routes)
 
 //IIFE
-(async() => {
+const func = async() => {
     await models.sequelize.sync();
     try {
-        await models.sequelize.authenticate()
-        console.log('Database connection established')
+        await models.sequelize.authenticate();
+        console.log('Database connection established');
     } catch (err) {
-        console.error('Error connection to the database: ', err)
+        console.error('Error connection to the database: ', err);
     }
-})
+};
 
+func();
 // setup a friendly greeting for the root route
 app.get('/', (req, res) => {
     res.json({

@@ -37,27 +37,24 @@ router.post('/users', asyncHandler(async(req, res) => {
 
 // Courses Routes
 router.get('/courses', asyncHandler(async(req, res) => {
-    try {
-        const courses = Courses.findAll({
-            attributes: {
-                exclude: ['createdAt', 'updatedAt']
-            },
-            include: [{
-                model: User,
-                as: 'user',
-                attribute: {
-                    exclude: ['password', 'createdAt', 'updatedAt ']
-                }
-            }]
-        })
-    } catch (e) {
-        throw e
-    }
+    const courses = await Course.findAll({
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        },
+        include: [{
+            model: User,
+            as: 'user',
+            attribute: {
+                exclude: ['password', 'createdAt', 'updatedAt ']
+            }
+        }]
+    })
+    res.json({ courses });
 }))
 
 router.get('/courses/:id', asyncHandler(async(req, res) => {
     try {
-        const course = Course.findOne({
+        const course = await Course.findOne({
             where: {
                 id: req.params.id,
             },
