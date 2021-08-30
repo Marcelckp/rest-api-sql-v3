@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
             allowNull: false,
             validate: {
                 notNull: {
-                    msg: "The value for description cannot be null"
+                    msg: "The value for title cannot be null"
                 },
                 notEmpty: {
                     msg: "Please provide a value for the title it cannot be empty"
