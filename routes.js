@@ -15,13 +15,13 @@ router.use(bodyParser.json());
 
 // User Routes
 router.get('/users', authenticateUser, asyncHandler(async(req, res) => {
-    const user = req.currentUser;
-    console.log(user);
-    res.json({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.emailAddress
-    })
+    // console.log(req.currentUser);
+
+    const user = await User.findOne({
+        where: { id: req.currentUser.id },
+        attributes: { exclude: ['password', 'createdAt', 'updatedAt'] }
+    });
+    res.json({ user })
 }))
 
 router.post('/users', asyncHandler(async(req, res) => {
@@ -92,7 +92,11 @@ router.get('/courses/:id', asyncHandler(async(req, res) => {
 
 router.post('/courses', authenticateUser, asyncHandler(async(req, res) => {
     try {
-        const course = await Course.create(req.body);
+        // programmed so that the user that is logged in has his id as the userId of the course so no validation error is shown
+        const course = await Course.build(req.body);
+        course.userId = req.currentUser.id;
+        await course.save();
+
         res.status(201).location(`/courses/${course.id}`).end();
     } catch (e) {
         if (e.name === 'SequelizeValidationError' || e.name === 'SequelizeUniqueConstraintError') {

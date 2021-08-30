@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
                     msg: "The value for description cannot be null"
                 },
                 notEmpty: {
-                    msg: "The format you gave for title is incorrect fix it and send your request again"
+                    msg: "Please provide a value for the title it cannot be empty"
 
                 }
             }
@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
                     msg: "The value for description cannot be null"
                 },
                 notEmpty: {
-                    msg: "The format you gave for description is incorrect fix it and send your request again"
+                    msg: "Please provide a value for the description it cannot be empty"
 
                 }
             }
@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
             as: 'user',
             foreignKey: {
                 fieldName: "userId",
-                // allowNull: false,
+                allowNull: false,
             }
         })
     }
