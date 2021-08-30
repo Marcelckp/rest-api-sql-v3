@@ -111,12 +111,12 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async(req, res) => {
         console.log(user.id, course.userId)
         if (course.userId === user.id) {
             if (course) {
-                await course.update(req.body);
-                // course.title = req.body.title;
-                // course.description = req.body.description;
-                // course.estimatedTime = req.body.estimatedTime;
-                // course.materialsNeeded = req.body.materialsNeeded;
-                // await course.save();
+                course.title = req.body.title;
+                course.description = req.body.description;
+                course.estimatedTime = req.body.estimatedTime;
+                course.materialsNeeded = req.body.materialsNeeded;
+                await course.save();
+                await Course.update({ course }, { where: { id: req.params.id } })
                 res.status(204).end()
             } else {
                 res.status(404).json({ message: 'The course you want to update can not be found.' })
@@ -126,7 +126,7 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async(req, res) => {
         }
     } catch (e) {
         if (e.name === 'SequelizeValidationError' || e.name === 'SequelizeUniqueConstraintError') {
-            const error = e.errors(err => err.message)
+            const error = e.errors.map(err => err.message)
             res.status(400).json({ error })
         } else {
             throw e;
@@ -136,7 +136,7 @@ router.put('/courses/:id', authenticateUser, asyncHandler(async(req, res) => {
 
 }))
 
-router.delete('/courses/:id/delete', authenticateUser, asyncHandler(async(req, res) => {
+router.delete('/courses/:id', authenticateUser, asyncHandler(async(req, res) => {
     const course = await Course.findByPk(req.params.id)
     const user = req.currentUser;
 
