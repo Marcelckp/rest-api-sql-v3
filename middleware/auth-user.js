@@ -10,17 +10,17 @@ exports.authenticateUser = async(req, res, next) => {
     const credentials = auth(req);
 
     if (credentials) {
-        const user = await User.findOne({ where: { username: credentials.name } })
+        const user = await User.findOne({ where: { emailAddress: credentials.name } })
         if (user) {
-            const authenticated = bcrypt.compareSync(credentials.pass, user.confirmedPassword)
+            const authenticated = bcrypt.compareSync(credentials.pass, user.password)
             if (authenticated) {
-                console.log(`Authentication successful for username: ${user.username}`)
+                console.log(`Authentication successful for username: ${user.emailAddress}: ${user.firstName} ${user.lastName}`)
                 req.currentUser = user;
             } else {
-                message = `Authentication failed for username: ${user.username}`;
+                message = `Authentication failed for username: ${user.emailAddress}: ${user.firstName} ${user.lastName}`;
             }
         } else {
-            message = `User "${user.username}" was not found`;
+            message = `User "${credentials.name}" was not found`;
         }
     } else {
         message = 'Authorize header not found';

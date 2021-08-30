@@ -33,27 +33,9 @@ module.exports = (sequelize) => {
         },
         estimatedTime: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notNull: {
-                    msg: "The value for estimatedTime cannot be null"
-                },
-                notEmpty: {
-                    msg: "The format you gave for estimatedTime is incorrect fix it and send your request again"
-                }
-            }
         },
         materialsNeeded: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notNull: {
-                    msg: "The value for materialsNeeded cannot be null"
-                },
-                notEmpty: {
-                    msg: "The format you gave for materialsNeeded is incorrect fix it and send your request again"
-                }
-            }
         }
     }, { sequelize });
     Course.associate = (models) => {
